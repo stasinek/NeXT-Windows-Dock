@@ -1,4 +1,4 @@
-#include "stdafx.h"
+b#include "stdafx.h"
 #include "dock.h"
 
 int APIENTRY
