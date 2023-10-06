@@ -1,4 +1,6 @@
+// Precompiled Headers >>
 #include "stdafx.h"
+// Include >>
 #include "dock.h"
 #include "dockbutton.h"
 #include "resource.h"
@@ -128,14 +130,14 @@ _SetDockButtonFile(DockButton *btn, LPCTSTR file, BOOL refresh)
 	HKEY hLinkFileKey;
 	TCHAR szLinkFileValue[10];
 
-	_tcsncpy(btn->szLinkFile, file, MAX_PATH);
+	_tcsncpy_s(btn->szLinkFile, file, MAX_PATH);
 	btn->szLinkFile[MAX_PATH] = TEXT('\0');
 	if(refresh) GetDockButtonLinkFile(btn);
 	InvalidateRect(btn->hWnd, NULL, TRUE);
 
 	if(!SUCCEEDED(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\WinDock\\Buttons"), 0, KEY_WRITE, &hLinkFileKey)))
 		return;
-	_sntprintf(szLinkFileValue, 9, TEXT("%u"), btn->uPosition);
+	_sntprintf_s(szLinkFileValue, 9, TEXT("%u"), btn->uPosition);
 	RegSetValueEx(hLinkFileKey, szLinkFileValue, 0, REG_SZ, (LPBYTE)file, (DWORD)(_tcslen(file)+1)*sizeof(TCHAR));
 	RegCloseKey(hLinkFileKey);
 }
@@ -175,8 +177,8 @@ _MoveDockButtonFile(DockButton *destBtn, DockButton *srcBtn)
 
 	if(!SUCCEEDED(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\WinDock\\Buttons"), 0, KEY_WRITE, &hLinkFileKey)))
 		return;
-	_sntprintf(szLinkFileDestValue, 9, TEXT("%u"), destBtn->uPosition);
-	_sntprintf(szLinkFileSrcValue,  9, TEXT("%u"), srcBtn->uPosition);
+	_sntprintf_s(szLinkFileDestValue, 9, TEXT("%u"), destBtn->uPosition);
+	_sntprintf_s(szLinkFileSrcValue,  9, TEXT("%u"), srcBtn->uPosition);
 	RegDeleteValue(hLinkFileKey, szLinkFileSrcValue);
 	if(!DOCKBUTTON_EMPTY(*srcBtn))
 		RegSetValueEx(hLinkFileKey, szLinkFileDestValue, 0, REG_SZ, (LPBYTE)srcBtn->szLinkFile, (DWORD)(_tcslen(srcBtn->szLinkFile)+1)*sizeof(TCHAR));
@@ -194,7 +196,7 @@ _MoveDockButtonFile(DockButton *destBtn, DockButton *srcBtn)
 	destBtn->lastWriteTime = srcBtn->lastWriteTime;
 	destBtn->creationTime = srcBtn->creationTime;
 	CopyMemory(destBtn->hIcons, srcBtn->hIconsBak, sizeof(srcBtn->hIcons));
-	_tcsncpy(destBtn->szLinkFile, srcBtn->szLinkFile, MAX_PATH);
+	_tcsncpy_s(destBtn->szLinkFile, srcBtn->szLinkFile, MAX_PATH);
 	destBtn->szLinkFile[MAX_PATH] = TEXT('\0');
 	ZeroMemory(srcBtn->hIcons, sizeof(srcBtn->hIcons));
 	srcBtn->szLinkFile[0] = TEXT('\0');
@@ -726,9 +728,9 @@ OpenDockButton(const DockButton *btn, LPCTSTR verb)
 	TCHAR curDir[MAX_PATH+1], filename[MAX_PATH+1];
 	filename[MAX_PATH] = TEXT('\0');
 	GetCurrentDirectory(MAX_PATH, curDir);
-	_tcscpy(filename, curDir);
-	_tcsncat(filename, TEXT("\\"), MAX_PATH);
-	_tcsncat(filename, btn->szLinkFile, MAX_PATH);
+	_tcsncpy_s(filename, curDir, MAX_PATH);
+	_tcsncat_s(filename, TEXT("\\"), MAX_PATH);
+	_tcsncat_s(filename, btn->szLinkFile, MAX_PATH);
 	ShellExecute(g_dockHWnd, verb, filename, NULL, curDir, SW_SHOW);
 }
 
@@ -765,7 +767,7 @@ GetDockButtonLinkFile(DockButton *btn)
 	{
 		if(!SUCCEEDED(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\WinDock\\Buttons"), 0, NULL, 0, KEY_READ | KEY_WRITE, NULL, &hLinkFileKey, NULL)))
 			goto error;
-		_sntprintf(szLinkFileValue, 9, TEXT("%u"), btn->uPosition);
+		_sntprintf_s(szLinkFileValue, 9, TEXT("%u"), btn->uPosition);
 		valueSize = MAX_PATH;
 		if(!SUCCEEDED(RegQueryValueEx(hLinkFileKey, szLinkFileValue, NULL, &valueType, btn->szLinkFile, &valueSize)))
 			goto error;
@@ -871,7 +873,7 @@ UpdateDockButtons(void)
 		g_dockButtons[i].state.exists = FALSE;
 
 	/* Look at all the files in the directory */
-	_sntprintf(findPath, MAX_PATH, TEXT("%s\\*"), g_dockAppDataDir);
+	_sntprintf_s(findPath, MAX_PATH, TEXT("%s\\*"), g_dockAppDataDir);
 	hFind = FindFirstFile(findPath, &findData);
 	if(hFind == INVALID_HANDLE_VALUE) return;
 	do

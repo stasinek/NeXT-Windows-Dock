@@ -1,4 +1,6 @@
-b#include "stdafx.h"
+// Precompiled Headers >>
+#include "stdafx.h"
+// Include >>
 #include "dock.h"
 
 int APIENTRY

@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinDock", "WinDock.vcxproj", "{C9CEED67-FDB3-4F97-8C45-A5C1C0931C4A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WinDockSetup", "..\WinDockSetup\WinDockSetup.vdproj", "{9A7FDD73-0615-4744-B92B-7C2AAFB361A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9CEED67-FDB3-4F97-8C45-A5C1C0931C4A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C9CEED67-FDB3-4F97-8C45-A5C1C0931C4A}.Debug|Win32.Build.0 = Debug|Win32
+		{C9CEED67-FDB3-4F97-8C45-A5C1C0931C4A}.Release|Win32.ActiveCfg = Release|Win32
+		{C9CEED67-FDB3-4F97-8C45-A5C1C0931C4A}.Release|Win32.Build.0 = Release|Win32
+		{9A7FDD73-0615-4744-B92B-7C2AAFB361A0}.Debug|Win32.ActiveCfg = Debug
+		{9A7FDD73-0615-4744-B92B-7C2AAFB361A0}.Release|Win32.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

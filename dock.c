@@ -1,4 +1,6 @@
-b#include "stdafx.h"
+// Precompiled Headers >>
+#include "stdafx.h"
+// Include >>
 #include "dock.h"
 #include "dockbutton.h"
 #include "resource.h"
@@ -36,7 +38,7 @@ InitDock(void)
 	/* Get our app data dir and change to it */
 	if(!SHGetSpecialFolderPath(NULL, g_dockAppDataDir, CSIDL_APPDATA, TRUE))
 		return FALSE;
-	_tcsncat(g_dockAppDataDir, TEXT("\\WinDock"), MAX_PATH);
+	_tcsncat_s(g_dockAppDataDir, "\\Dock", MAX_PATH);
 	CreateDirectory(g_dockAppDataDir, NULL);
 	if(!SetCurrentDirectory(g_dockAppDataDir))
 		return FALSE;
